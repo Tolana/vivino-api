@@ -2,6 +2,27 @@ import puppeteer from 'puppeteer';
 import minimist from 'minimist';
 import fs from 'fs-extra';
 
+
+
+
+ 
+*/
+
+//NOTE: Det viser sig at denne app, kun søger på teksten, og filtrer derefter _alle_ resutlater, med filtre
+//      Istedet for faktisk at specificere selve søgningen.
+
+//TODO/WIP: Brug chrome devtools til at finde API calls
+
+//https://www.vivino.com/webapi/explore/explore?country_code=DK&currency_code=DKK
+//&grape_filter=varietal&min_rating=3.8&order_by=best_picks&order=desc&price_range_max=500&price_range_min=90
+//&wine_type_ids%5B%5D=1&page=1&language=da
+// Malbec = https://www.vivino.com/explore?grape_ids[]=9&page=1
+//
+
+//TODO: find ud af relevant information og bedste måde at søge på...
+
+
+
 const run = async (
 	name,
 	countryCode = 'US',
@@ -203,7 +224,7 @@ const run = async (
 					console.log('Results were collected from the page:', index);
 					result.vinos.push(...pageItems);
 					index++;
-					isNext = true;
+					//isNext = true;
 				} else {
 					// no more data
 					result.status = STATUS_FULL;
@@ -212,7 +233,7 @@ const run = async (
 				pause++;
 				await page.waitForTimeout(pause * PAUSE_MULTIPLIER * 1000);
 				console.log(`Waited for ${pause * PAUSE_MULTIPLIER} seconds on the page ${index}`);
-				isNext = true;
+				//isNext = true;
 			} else {
 				// return some error info
 				result.http_status = response.status(); // http status
